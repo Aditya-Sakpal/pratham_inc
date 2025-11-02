@@ -204,50 +204,27 @@ docker-compose up --build
 7. **Submit Quiz**: Click "Submit Quiz" to get evaluation results
 8. **Review Results**: View score, feedback, and topics to review
 
-## Demo Recording
-
-To record a demo:
-
-1. **Screen Recording Software**: Use OBS Studio, QuickTime, or similar
-2. **Demo Flow**:
-   - Start application
-   - Select Class X
-   - Select "Chemical Reactions and Equations"
-   - Generate Summary
-   - Ask a question: "What is a balanced chemical equation?"
-   - Generate Quiz
-   - Answer a few questions
-   - Upload image of handwritten answers
-   - Submit quiz
-   - Show evaluation results
-3. **Key Points to Highlight**:
-   - Topic selection interface
-   - Summary generation speed
-   - Chat interaction quality
-   - Quiz generation variety
-   - OCR functionality
-   - Detailed evaluation feedback
-
 ## Environment Variables Reference
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `OPENAI_API_KEY` | OpenAI API key (required) | - |
-| `PINECONE_API_KEY` | Pinecone API key (required) | - |
-| `PINECONE_INDEX_NAME` | Pinecone index name | `prathaminc` |
-| `PINECONE_NAMESPACE` | Pinecone namespace | `ncert-science` |
-| `PINECONE_REGION` | Pinecone region | `us-east-1` |
-| `OPENAI_MODEL` | OpenAI model for LLM | `gpt-4o-mini` |
-| `OPENAI_EMBEDDING_MODEL` | Embedding model | `text-embedding-3-small` |
-| `OPENAI_EMBEDDING_DIMENSIONS` | Embedding dimensions | `512` |
-| `OCR_PROVIDER` | OCR provider (tesseract/easyocr/paddleocr) | `tesseract` |
-| `CORS_ORIGINS` | Allowed CORS origins | `http://localhost:5173` |
+| Variable                        | Description                                | Default                    |
+| ------------------------------- | ------------------------------------------ | -------------------------- |
+| `OPENAI_API_KEY`              | OpenAI API key (required)                  | -                          |
+| `PINECONE_API_KEY`            | Pinecone API key (required)                | -                          |
+| `PINECONE_INDEX_NAME`         | Pinecone index name                        | `prathaminc`             |
+| `PINECONE_NAMESPACE`          | Pinecone namespace                         | `ncert-science`          |
+| `PINECONE_REGION`             | Pinecone region                            | `us-east-1`              |
+| `OPENAI_MODEL`                | OpenAI model for LLM                       | `gpt-4o-mini`            |
+| `OPENAI_EMBEDDING_MODEL`      | Embedding model                            | `text-embedding-3-small` |
+| `OPENAI_EMBEDDING_DIMENSIONS` | Embedding dimensions                       | `512`                    |
+| `OCR_PROVIDER`                | OCR provider (tesseract/easyocr/paddleocr) | `tesseract`              |
+| `CORS_ORIGINS`                | Allowed CORS origins                       | `http://localhost:5173`  |
 
 ## Prompt Templates
 
 The application uses the following prompt templates (see `backend/app/services/llm_service.py`):
 
 ### Summary Generation
+
 ```
 You are an expert NCERT Science teacher for {class_level} students.
 
@@ -262,6 +239,7 @@ Requirements:
 ```
 
 ### Chat Q&A
+
 ```
 You are a helpful NCERT Science tutor. Answer questions about "{topic_name}" based on the following context from NCERT Science textbooks.
 
@@ -274,6 +252,7 @@ Guidelines:
 ```
 
 ### Quiz Generation
+
 ```
 You are an expert NCERT Science teacher creating an assessment quiz for {class_level} students on the topic "{topic_name}".
 
@@ -288,6 +267,7 @@ Ensure questions are based on the provided context and appropriate for {class_le
 ```
 
 ### Answer Evaluation
+
 ```
 Evaluate the following quiz answers for the topic "{topic_name}".
 
@@ -336,6 +316,7 @@ This is a proof-of-concept application. Adapt for production use as needed.
 ## Contributing
 
 This is a demo project. For production deployment, consider:
+
 - Database integration for persistent storage
 - User authentication and authorization
 - Rate limiting and API security
@@ -343,4 +324,3 @@ This is a demo project. For production deployment, consider:
 - Performance optimization
 - Enhanced OCR accuracy
 - Mobile responsiveness improvements
-
