@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import './App.css'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://kjqutkuq2arn3ikq4utim2dvna0dbgmj.lambda-url.ap-south-1.on.aws'
 
 function App() {
   // State management

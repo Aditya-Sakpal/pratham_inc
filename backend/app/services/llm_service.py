@@ -418,6 +418,16 @@ class LLMService:
             }
 
 
-# Global instance
-llm_service = LLMService()
+# Global instance - lazy initialization to avoid crashes on import
+_llm_service = None
+
+class _LazyLLMService:
+    """Lazy wrapper that initializes LLMService on first access"""
+    def __getattr__(self, name):
+        global _llm_service
+        if _llm_service is None:
+            _llm_service = LLMService()
+        return getattr(_llm_service, name)
+
+llm_service = _LazyLLMService()
 

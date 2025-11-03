@@ -34,7 +34,8 @@ class Settings(BaseSettings):
     OCR_PROVIDER: str = "openai"  # Options: openai, tesseract, easyocr, paddleocr
     
     # CORS Configuration
-    CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://localhost:3000"]
+    # Empty list means allow all origins (for Lambda Function URLs)
+    CORS_ORIGINS: List[str] = []  # Empty list = allow all origins
     
     # File Upload Configuration
     MAX_UPLOAD_SIZE: int = 10 * 1024 * 1024  # 10MB

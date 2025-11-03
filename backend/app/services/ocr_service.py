@@ -156,6 +156,16 @@ class OCRService:
         return self.extract_text(image_data)
 
 
-# Global instance
-ocr_service = OCRService()
+# Global instance - lazy initialization to avoid crashes on import
+_ocr_service = None
+
+class _LazyOCRService:
+    """Lazy wrapper that initializes OCRService on first access"""
+    def __getattr__(self, name):
+        global _ocr_service
+        if _ocr_service is None:
+            _ocr_service = OCRService()
+        return getattr(_ocr_service, name)
+
+ocr_service = _LazyOCRService()
 

@@ -47,17 +47,8 @@ NCERT_TOPICS = {
 
 
 
-@router.get("/", response_model=List[TopicResponse])
-async def list_topics(class_level: str = None):
-    """
-    List all available topics
-    
-    Args:
-        class_level: Optional filter by class (Class VIII, Class IX, Class X)
-        
-    Returns:
-        List of topics
-    """
+def _get_topics_list(class_level: str = None):
+    """Helper function to get topics list"""
     topics = []
     
     if class_level:
@@ -83,6 +74,21 @@ async def list_topics(class_level: str = None):
         ))
     
     return topics
+
+
+@router.get("/", response_model=List[TopicResponse])
+async def list_topics(class_level: str = None):
+    """
+    List all available topics (with trailing slash)
+    Handles both /api/topics and /api/topics/ to avoid redirects in Lambda
+    
+    Args:
+        class_level: Optional filter by class (Class VIII, Class IX, Class X)
+        
+    Returns:
+        List of topics
+    """
+    return _get_topics_list(class_level)
 
 
 @router.get("/classes", response_model=List[str])

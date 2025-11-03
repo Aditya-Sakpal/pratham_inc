@@ -1,0 +1,26 @@
+# AWS Lambda Container Image for FastAPI
+# Use AWS Lambda Python base image
+FROM public.ecr.aws/lambda/python:3.10
+
+# Copy requirements from project root
+COPY requirements.txt ${LAMBDA_TASK_ROOT}/requirements.txt
+
+# Upgrade pip to get prebuilt wheels (avoids Rust compiler requirement)
+RUN pip install --upgrade pip
+
+# Install dependencies
+RUN pip install -r requirements.txt --target ${LAMBDA_TASK_ROOT} --only-binary :all: || \
+    pip install -r requirements.txt --target ${LAMBDA_TASK_ROOT}
+
+# Copy backend code
+COPY backend/ ${LAMBDA_TASK_ROOT}/
+
+# Copy lambda handler
+COPY backend/lambda_handler.py ${LAMBDA_TASK_ROOT}/lambda_handler.py
+
+# Copy .env file (optional - better to use Lambda environment variables)
+# Uncomment if you want to include .env in the image
+# COPY .env ${LAMBDA_TASK_ROOT}/.env
+
+# Set the CMD to your handler
+CMD ["lambda_handler.handler"]

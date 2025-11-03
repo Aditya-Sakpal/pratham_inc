@@ -15,6 +15,7 @@ class PineconeService:
         """Initialize Pinecone client and embeddings"""
         self.pc = Pinecone(api_key=settings.PINECONE_API_KEY)
         self.index = self.pc.Index(settings.PINECONE_INDEX_NAME)
+        # Initialize embeddings - use environment variable if available
         self.embeddings = OpenAIEmbeddings(
             openai_api_key=settings.OPENAI_API_KEY,
             model=settings.OPENAI_EMBEDDING_MODEL,
@@ -112,6 +113,23 @@ class PineconeService:
         return self.get_relevant_chunks(query, topic_name, class_level, top_k)
 
 
-# Global instance
-pinecone_service = PineconeService()
+# Global instance - lazy initialization to avoid crashes on import
+_pinecone_service = None
+
+class _LazyPineconeService:
+    """Lazy wrapper that initializes PineconeService on first access"""
+    def __getattr__(self, name):
+        global _pinecone_service
+        if _pinecone_service is None:
+            _pinecone_service = PineconeService()
+        return getattr(_pinecone_service, name)
+    
+    def __call__(self, *args, **kwargs):
+        """Allow calling the wrapper itself"""
+        global _pinecone_service
+        if _pinecone_service is None:
+            _pinecone_service = PineconeService()
+        return _pinecone_service
+
+pinecone_service = _LazyPineconeService()
 

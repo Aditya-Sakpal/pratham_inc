@@ -1,3 +1,16 @@
 .venv
 .env
 frontend/node_modules
+
+# Lambda deployment
+lambda_package/
+deployment.zip
+
+# Logs
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd

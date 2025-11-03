@@ -1,0 +1,57 @@
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+Dockerfile.*
+docker-compose.yml
+
+# Frontend
+frontend/
+node_modules/
+
+# Scraper
+scrapper/
+*.log
+
+# Books
+books/
+
+# Docs
+*.md
+!README.md
+
+# Test files
+tests/
+test_*.py
+*_test.py
+
+# Environment
+.env
+.env.*
+!.env.example
+

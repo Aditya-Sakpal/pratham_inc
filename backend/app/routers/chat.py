@@ -85,15 +85,17 @@ async def chat_stream(request: ChatRequest):
         except Exception as e:
             yield f"data: {json.dumps({'error': str(e)})}\n\n"
     
-    return StreamingResponse(
+    # Create streaming response with CORS headers
+    # Note: CORS middleware should handle CORS, but we add headers explicitly for streaming
+    response = StreamingResponse(
         generate_stream(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "X-Accel-Buffering": "no"
-        }
+        media_type="text/event-stream"
     )
+    # Add headers for SSE
+    response.headers["Cache-Control"] = "no-cache"
+    response.headers["Connection"] = "keep-alive"
+    response.headers["X-Accel-Buffering"] = "no"
+    return response
 
 
 @router.post("/", response_model=ChatResponse)
