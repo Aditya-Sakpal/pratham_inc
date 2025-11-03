@@ -1,0 +1,538 @@
+{
+	"info": {
+		"_postman_id": "ncert-science-api",
+		"name": "NCERT Science Learning Platform API",
+		"description": "Complete API collection for NCERT Science Learning Platform\n\nBase URL: https://kjqutkuq2arn3ikq4utim2dvna0dbgmj.lambda-url.ap-south-1.on.aws",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Root Endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Root endpoint for health check"
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Health check endpoint to verify API is running"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Topics",
+			"item": [
+				{
+					"name": "List All Topics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/topics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"topics"
+							]
+						},
+						"description": "List all available topics across all classes"
+					},
+					"response": []
+				},
+				{
+					"name": "List Topics by Class",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/topics/?class_level=Class VIII",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"topics",
+								""
+							],
+							"query": [
+								{
+									"key": "class_level",
+									"value": "Class VIII",
+									"description": "Optional: Class VIII, Class IX, or Class X"
+								}
+							]
+						},
+						"description": "List topics filtered by class level"
+					},
+					"response": []
+				},
+				{
+					"name": "List Classes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/topics/classes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"topics",
+								"classes"
+							]
+						},
+						"description": "Get list of all available class levels"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Topic by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/topics/viii_crop_production",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"topics",
+								"viii_crop_production"
+							],
+							"variable": [
+								{
+									"key": "topic_id",
+									"value": "viii_crop_production",
+									"description": "Topic ID (e.g., viii_crop_production, ix_matter_nature, x_chemical_reactions)"
+								}
+							]
+						},
+						"description": "Get specific topic information by topic ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Summary",
+			"item": [
+				{
+					"name": "Generate Summary",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic_id\": \"viii_crop_production\",\n    \"topic_name\": \"Crop Production and Management\",\n    \"class_level\": \"Class VIII\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/summary",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"summary"
+							]
+						},
+						"description": "Generate a summary for a specific topic"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Chat Stream (SSE)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic_id\": \"viii_crop_production\",\n    \"topic_name\": \"Crop Production and Management\",\n    \"class_level\": \"Class VIII\",\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"What is crop rotation?\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/chat/stream",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"chat",
+								"stream"
+							]
+						},
+						"description": "Stream chat response using Server-Sent Events (SSE). Returns chunks of text as they are generated."
+					},
+					"response": []
+				},
+				{
+					"name": "Chat (Non-Streaming)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic_id\": \"ix_matter_nature\",\n    \"topic_name\": \"Matter in Our Surroundings\",\n    \"class_level\": \"Class IX\",\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"Explain the three states of matter.\"\n        },\n        {\n            \"role\": \"assistant\",\n            \"content\": \"Matter exists in three states: solid, liquid, and gas...\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"What are the properties of each state?\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/chat/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"chat",
+								""
+							]
+						},
+						"description": "Non-streaming chat endpoint. Returns complete response after generation."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quiz",
+			"item": [
+				{
+					"name": "Generate Quiz",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic_id\": \"x_chemical_reactions\",\n    \"topic_name\": \"Chemical Reactions and Equations\",\n    \"class_level\": \"Class X\",\n    \"num_mcqs\": 5,\n    \"num_fill_blank\": 3,\n    \"num_short_answer\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/quiz",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"quiz"
+							]
+						},
+						"description": "Generate a quiz for a topic with specified number of questions of each type"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Quiz by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/quiz/{{quiz_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"quiz",
+								"{{quiz_id}}"
+							],
+							"variable": [
+								{
+									"key": "quiz_id",
+									"value": "",
+									"description": "Quiz ID returned from Generate Quiz endpoint"
+								}
+							]
+						},
+						"description": "Retrieve a previously generated quiz by its ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluation",
+			"item": [
+				{
+					"name": "Upload Image for OCR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": [],
+									"description": "Image file (JPG, PNG, etc.) containing handwritten or typed answers"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/evaluation/upload-image",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evaluation",
+								"upload-image"
+							]
+						},
+						"description": "Upload an image for OCR text extraction. Returns extracted text and confidence score."
+					},
+					"response": []
+				},
+				{
+					"name": "Evaluate Answers (FormData with Image)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "quiz_id",
+									"value": "{{quiz_id}}",
+									"type": "text",
+									"description": "Quiz ID from Generate Quiz endpoint"
+								},
+								{
+									"key": "answers",
+									"value": "{\"q1\": \"Option A\", \"q2\": \"Photosynthesis\", \"q3\": \"The process by which plants make food using sunlight\"}",
+									"type": "text",
+									"description": "JSON string of answers: {\"question_id\": \"answer\"}"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": [],
+									"description": "Optional: Image file with handwritten answers for OCR"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/evaluation/evaluate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evaluation",
+								"evaluate"
+							]
+						},
+						"description": "Evaluate quiz answers using FormData. Supports optional image upload for OCR extraction of handwritten answers."
+					},
+					"response": []
+				},
+				{
+					"name": "Evaluate Answers (FormData without Image)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "quiz_id",
+									"value": "{{quiz_id}}",
+									"type": "text"
+								},
+								{
+									"key": "answers",
+									"value": "{\"q1\": \"Option B\", \"q2\": \"Respiration\", \"q3\": \"Mitochondria is the powerhouse of the cell\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/evaluation/evaluate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evaluation",
+								"evaluate"
+							]
+						},
+						"description": "Evaluate quiz answers without image (text-only submission)"
+					},
+					"response": []
+				},
+				{
+					"name": "Evaluate Answers (JSON)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quiz_id\": \"{{quiz_id}}\",\n    \"answers\": {\n        \"q1\": \"Option A\",\n        \"q2\": \"Photosynthesis\",\n        \"q3\": \"The process by which plants make food using sunlight, water, and carbon dioxide\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/evaluation/evaluate-json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evaluation",
+								"evaluate-json"
+							]
+						},
+						"description": "Evaluate quiz answers using JSON (backward compatibility endpoint)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Evaluation by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/evaluation/{{evaluation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evaluation",
+								"{{evaluation_id}}"
+							],
+							"variable": [
+								{
+									"key": "evaluation_id",
+									"value": "",
+									"description": "Evaluation ID returned from Evaluate Answers endpoint"
+								}
+							]
+						},
+						"description": "Retrieve a previously stored evaluation by its ID"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://kjqutkuq2arn3ikq4utim2dvna0dbgmj.lambda-url.ap-south-1.on.aws",
+			"type": "string"
+		},
+		{
+			"key": "quiz_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "evaluation_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
+
